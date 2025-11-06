@@ -13,7 +13,7 @@ function secondsToMinutesSeconds(seconds) {
 }
 async function getSongs(folder) {
   currFolder = folder;
-  let a = await fetch(`http://127.0.0.1:3000/day%2050/${folder}/`);
+  let a = await fetch(`${folder}/`);
   let response = await a.text();
   let div = document.createElement("div");
   div.innerHTML = response;
@@ -23,8 +23,7 @@ async function getSongs(folder) {
     const element = as[i];
     if (element.href.endsWith(".mp3")) {
       let newHref = element.href
-        .replaceAll("%5C", "/")
-        .replace("//day%2050", "");
+        .replaceAll("%5C", "/");
       songs.push(newHref.split(`${folder}`)[1]);
     }
   }
@@ -64,7 +63,7 @@ const playMusic = (track, pause = false) => {
   document.querySelector(".songtime").innerHTML = "00:00 / 00:00";
 };
 async function displayAlbums() {
-  let a = await fetch(`http://127.0.0.1:3000/day%2050/songs/`);
+  let a = await fetch(`songs/`);
   let response = await a.text();
   let div = document.createElement("div");
   div.innerHTML = response;
@@ -75,9 +74,7 @@ async function displayAlbums() {
     const e = array[index];
     if (e.href.includes("songs") && !e.href.includes(".htaccess")) {
       let folder = e.href.split("%5C").slice(-1)[0];
-      let a = await fetch(
-        `http://127.0.0.1:3000/day%2050/songs/${folder}/info.json`
-      );
+      let a = await fetch(`songs/${folder}/info.json`);
       let response = await a.json();
       cardContainer.innerHTML =
         cardContainer.innerHTML +
