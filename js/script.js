@@ -13,37 +13,47 @@ function secondsToMinutesSeconds(seconds) {
 }
 async function getSongs(folder) {
   currFolder = folder;
-  let response = await fetch(`${folder}/info.json`);
-  let data = await response.json();
-  songs = data.tracks;
-
-  let songUL = document.querySelector(".songList ul");
-  songUL.innerHTML = "";
-
-  for (const song of songs) {
-    songUL.innerHTML += `
-      <li>
-        <img class="invert" src="img/music.svg" alt="">
-        <div class="info">
-          <div>${song}</div>
-          <div>Nadeem</div>
-        </div>
-        <div class="playnow">
-          <span>Play Now</span>
-          <img class="invert" src="img/play.svg" alt="">
-        </div>
-      </li>`;
+  let a = await fetch(`${folder}/`);
+  let response = await a.text();
+  let div = document.createElement("div");
+  div.innerHTML = response;
+  let as = div.getElementsByTagName("a");
+  songs = [];
+  for (i = 0; i < as.length; i++) {
+    const element = as[i];
+    if (element.href.endsWith(".mp3")) {
+      let newHref = element.href
+        .replaceAll("%5C", "/")
+        .replace("//day%2050", "");
+      songs.push(newHref.split(`${folder}`)[1]);
+    }
   }
-
-  Array.from(songUL.getElementsByTagName("li")).forEach((e) => {
-    e.addEventListener("click", () => {
-      playMusic(e.querySelector(".info div").innerText.trim());
+  let songUL = document
+    .querySelector(".songList")
+    .getElementsByTagName("ul")[0];
+  songUL.innerHTML = "";
+  for (const song of songs) {
+    songUL.innerHTML =
+      songUL.innerHTML +
+      `<li><img class="invert" src="img/music.svg" alt="">
+                <div class="info">
+                  <div>${song}</div>
+                  <div>Nadeem</div>
+                </div>
+                <div class="playnow">
+                  <span>Play Now</span>
+                  <img class="invert" src="img/play.svg" alt="">
+                </div></li>`;
+  }
+  Array.from(
+    document.querySelector(".songList").getElementsByTagName("li")
+  ).forEach((e) => {
+    e.addEventListener("click", (element) => {
+      playMusic(e.querySelector(".info").firstElementChild.innerHTML.trim());
     });
   });
-
   return songs;
 }
-
 const playMusic = (track, pause = false) => {
   currentSong.src = `${currFolder}/` + track;
   if (!pause) {
