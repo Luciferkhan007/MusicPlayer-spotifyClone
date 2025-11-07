@@ -65,6 +65,7 @@ const playMusic = (track, pause = false) => {
 };
 async function displayAlbums() {
   let a = await fetch(`songs/`);
+  console.log(a);
   let response = await a.text();
   let div = document.createElement("div");
   div.innerHTML = response;
@@ -74,9 +75,13 @@ async function displayAlbums() {
   for (let index = 0; index < array.length; index++) {
     const e = array[index];
     if (e.href.includes("songs") && !e.href.includes(".htaccess")) {
+      console.log(e.href);
       let folder = e.href.split("%5C").slice(-1)[0];
+      console.log(folder);
       let a = await fetch(`songs/${folder}/info.json`);
+      console.log(a);
       let response = await a.json();
+      console.log(response);
       cardContainer.innerHTML =
         cardContainer.innerHTML +
         `<div data-folder="${folder}" class="card">
