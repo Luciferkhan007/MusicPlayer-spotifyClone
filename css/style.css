@@ -330,6 +330,9 @@ body {
   .playbar {
     right: 25px;
   }
+  .play {
+    top: 300px;
+  }
   .card:hover .play {
     top: 250px;
   }
