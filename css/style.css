@@ -98,7 +98,6 @@ body {
   object-fit: contain;
 }
 .play {
-  /* bottom: 102px; */
   position: absolute;
   top: 170px;
   right: 20px;
@@ -108,7 +107,6 @@ body {
 .card:hover .play {
   opacity: 1;
   top: 150px;
-  /* bottom: 102px; */
 }
 .card:hover {
   background-color: rgb(50, 50, 50);
@@ -331,6 +329,9 @@ body {
   }
   .playbar {
     right: 25px;
+  }
+  .card:hover .play {
+    top: 250px;
   }
 }
 @media (max-width: 500px) {
