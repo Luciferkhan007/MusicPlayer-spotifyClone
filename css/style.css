@@ -90,6 +90,10 @@ body {
   position: relative;
   cursor: pointer;
 }
+.card h2,
+p {
+  text-align: center;
+}
 .card > * {
   padding-top: 10px;
 }
@@ -330,11 +334,12 @@ body {
   .playbar {
     right: 25px;
   }
-  .play {
-    top: 300px;
+ .play {
+    top: 600px;
+    right: 40px;
   }
   .card:hover .play {
-    top: 250px;
+    top: 550px;
   }
 }
 @media (max-width: 500px) {
@@ -362,5 +367,12 @@ body {
   }
   .left {
     width: 100vw;
+  }
+  .play {
+    top: 300px;
+    right: 40px;
+  }
+  .card:hover .play {
+    top: 250px;
   }
 }
